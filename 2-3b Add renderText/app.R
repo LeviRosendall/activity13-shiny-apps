@@ -44,9 +44,13 @@ server <- function(input, output, session) {
   })
   
   # Create text output stating the correlation between the two ploted 
-  output$correlation <- ___
+  output$correlation <- renderText({
+    r <- round(cor(movies[, input$x], movies[, input$y], use="pairwise"),3)
+    paste0("Correlation = ", r,
+           ". Note: If the correlation is between two non-numeric variables it is not meaningful.")
+  })
   
-  s}
+  }
 
 # Create the Shiny app object --------------------------------------------------
 

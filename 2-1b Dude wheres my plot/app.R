@@ -27,7 +27,8 @@ ui <- fluidPage(
     ),
     
     mainPanel(
-      plotOutput(outputId = "scatterplot")
+      plotOutput(outputId = "scatterplot", height=200),
+      plotOutput(outputId = "densityplot", height=200)
     )
   )
 )

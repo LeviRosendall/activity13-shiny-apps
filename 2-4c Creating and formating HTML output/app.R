@@ -29,8 +29,7 @@ ui <- fluidPage(
     
     mainPanel(
       plotOutput(outputId = "scatterplot"),
-      textOutput(outputId = "avg_x"), # avg of x
-      textOutput(outputId = "avg_y"), # avg of y
+      htmlOutput(outputId = "avgs"), # avgs
       verbatimTextOutput(outputId = "lmoutput") # regression output
     )
   )
@@ -55,11 +54,21 @@ server <- function(input, output, session) {
     paste("Average", input$y, "=", avg_y)
   })
   
+  output$avgs <- renderUI({
+    avg_x <- movies %>% pull(input$x) %>% mean() %>% round(2)
+    avg_y <- movies %>% pull(input$y) %>% mean() %>% round(2)
+    str_x <- paste("Average", input$x, "=", avg_x)
+    str_y <- paste("Average", input$y, "=", avg_y)
+    HTML(paste(str_x, str_y, sep = '<br/>'))
+  })
+  
   output$lmoutput <- renderPrint({
     x <- movies %>% pull(input$x)
     y <- movies %>% pull(input$y)
     print(summary(lm(y ~ x, data = movies)), digits = 3, signif.stars = FALSE)
   })
+  
+ 
   
 }
 

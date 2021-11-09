@@ -21,14 +21,14 @@ ui <- fluidPage(
         inputId = "y",
         label = "Y-axis:",
         choices = c("imdb_rating", "imdb_num_votes", "critics_score", "audience_score", "runtime"),
-        selected = "audience_score"
+        selected = "imdb_rating"
       ),
       # Select variable for x-axis
       selectInput(
         inputId = "x",
         label = "X-axis:",
         choices = c("imdb_rating", "imdb_num_votes", "critics_score", "audience_score", "runtime"),
-        selected = "critics_score"
+        selected = "imdb_rating"
       )
     ),
     

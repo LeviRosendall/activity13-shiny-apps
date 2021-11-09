@@ -29,9 +29,9 @@ ui <- fluidPage(
     
     mainPanel(
       plotOutput(outputId = "scatterplot"),
-      ___(outputId = ___) # regression output
-      ___(outputId = ___) # avg of x
-      ___(outputId = ___) # avg of y
+      verbatimTextOutput(outputId = "lmoutput"), # regression output
+      textOutput(outputId = "avg_x"), # avg of x
+      textOutput(outputId = "avg_y") # avg of y
       
     )
   )
