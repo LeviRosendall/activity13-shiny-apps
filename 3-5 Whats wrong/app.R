@@ -19,8 +19,13 @@ server <- function(input, output, session) {
   mult_3 <- function(x) {
     x * 3
   }
-  output$x_updated <- mult_3(input$x)
+  current_x <- reactive({
+    mult_3(input$x)
+  })
   
+  output$x_updated <- renderText({
+    current_x()
+  })
 }
 
 # Create the Shiny app ---------------------------------------------------------

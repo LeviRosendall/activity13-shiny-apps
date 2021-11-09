@@ -70,6 +70,10 @@ ui <- fluidPage(
         inputId = "plot_title",
         label = "Plot title",
         placeholder = "Enter text to be used as plot title"
+      ),
+      
+      actionButton(inputId = "update_plot_title",
+                   label = "Update plot title"
       )
     ),
     
@@ -82,10 +86,17 @@ ui <- fluidPage(
 # Define server ----------------------------------------------------------------
 
 server <- function(input, output, session) {
+  new_plot_title <- eventReactive(
+    eventExpr = input$update_plot_title,
+    valueExpr = {
+      toTitleCase(input$plot_title)
+    }
+  )
+  
   output$scatterplot <- renderPlot({
     ggplot(data = movies, aes_string(x = input$x, y = input$y, color = input$z)) +
       geom_point(alpha = input$alpha, size = input$size) +
-      labs(title = toTitleCase(input$plot_title))
+      labs(title = new_plot_title())
   })
 }
 

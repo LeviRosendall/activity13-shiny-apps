@@ -86,22 +86,25 @@ server <- function(input, output, session) {
     filter(movies, title_type %in% input$selected_type)
   })
   
-  # Convert plot_title toTitleCase
-  output$pretty_plot_title <- toTitleCase(input$plot_title)
+  # Convert plot_title 
+  pretty_plot_title <- reactive({
+    toTitleCase(input$plot_title)
+  })
+  
   
   # Create scatterplot object the plotOutput function is expecting
   output$scatterplot <- renderPlot({
     ggplot(
-      data = movies_subset,
+      data = movies_subset(),
       aes_string(x = input$x, y = input$y, color = input$z)
     ) +
       geom_point() +
-      labs(title = pretty_plot_title)
+      labs(title = pretty_plot_title())
   })
   
   # Create descriptive text
   output$description <- renderText({
-    paste0("The plot above titled '", pretty_plot_title, "' visualizes the relationship between ", input$x, " and ", input$y, ", conditional on ", input$z, ".")
+    paste0("The plot above titled '", pretty_plot_title(), "' visualizes the relationship between ", input$x, " and ", input$y, ", conditional on ", input$z, ".")
   })
 }
 

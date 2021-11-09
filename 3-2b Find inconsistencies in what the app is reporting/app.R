@@ -98,7 +98,8 @@ server <- function(input, output, session) {
   
   # Print number of movies plotted
   output$n <- renderUI({
-    types <- factor(movies_subset()$title_type, levels = input$selected_type)
+    types <- movies_sample()$title_type %>% 
+      factor(levels = input$selected_type)
     counts <- table(types)
     HTML(paste("There are", counts, input$selected_type, "movies plotted in the plot above. <br>"))
   })

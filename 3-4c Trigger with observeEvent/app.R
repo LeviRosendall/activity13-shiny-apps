@@ -34,15 +34,15 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   # Print a message to the console every time button is pressed;
-  ___(input$___, {
+  observeEvent(input$button, {
     cat("Showing", input$n_rows, "rows\n")
   })
   
   # Take a reactive dependency on input$button, but not on any other inputs
-  df <- ___(input$___, {
+  df <- eventReactive(input$button, {
     head(movies, input$n_rows)
   })
-  output$___ <- ___({
+  output$datatable <- renderTable({
     df()
   })
   

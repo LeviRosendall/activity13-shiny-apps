@@ -40,13 +40,15 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   # Create reactive data frame
-  movies_selected <- ___
+  movies_selected <- reactive({
+    movies %>% select(input$selected_var)
+  })
   
   # Create data table
   output$moviestable <- DT::renderDataTable({
     req(input$selected_var)
     datatable(
-      data = movies %>% select(input$selected_var),
+      data = movies_selected(),
       options = list(pageLength = 10),
       rownames = FALSE
     )
@@ -59,10 +61,10 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       if (input$filetype == "csv") {
-        write_csv(movies %>% select(input$selected_var), file)
+        write_csv(movies_selected(), file)
       }
       if (input$filetype == "tsv") {
-        write_tsv(movies %>% select(input$selected_var), file)
+        write_tsv(movies_selected(), file)
       }
     }
   )
